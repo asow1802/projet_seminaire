@@ -1,8 +1,9 @@
 # On charge les données
-df = read.csv("/home/layedev/Documents/miashs2026/seminaire/ODD_DEP.csv", header=TRUE, sep = ";")
+df = read.csv("/home/layedev/Documents/miashs2026/seminaire/ODD_DEP.csv", header=TRUE, sep = ";", dec = ".")
 
 ## Nettoyage des données initiales : supprimer les lignes qui contiennent un A2021 = NA
 df_clean = df[!is.na(df$A2021), ]
+dim(df_clean)
 
 # On recupère toutes les noms de variables de notrebase de données sans tenir compte des doublons
 variables = matrix(unique(df$variable), byrow = TRUE)
@@ -54,4 +55,53 @@ colnames(tab_final) = names_col
 View(tab_final)
 # La dimension 
 dim(tab_final)
-
+sum(is.na(tab_final))
+# On enregistre la tableau sous format csv dans le fichier nommé data_clean.cs
+write.csv(tab_final, file = "/home/layedev/Documents/miashs2026/seminaire/projet_seminaire/data_clean.csv")
+new_df = read.csv("/home/layedev/Documents/miashs2026/seminaire/projet_seminaire/data_clean.csv", header=TRUE)
+# On définit les données sur les quelles on souhaite effectuer notre étude
+View(new_df)
+data = cbind(
+       new_df$libgeo,                  # Villes d'études
+       new_df$taux_pvt.total,          # taux de pauvreté total
+       new_df$taux_chom_bit.total,     # Taux de chômage (BIT)
+       new_df$taux_emp.total,          # Taux d’emploi
+       new_df$ecart_tx_emp_f_h.total,  # Écart d’emploi femmes/hommes
+       new_df$sal_hor_net_femme.ens,   # Salaire horaire net des femmes (ensemble)
+       new_df$sal_hor_net_homme.ens,   # Salaire horaire net des hommes (ensemble)
+       new_df$part_tps_partiel.,       # Part des salariés à temps partiel
+       new_df$part_chomeurs_ld.,       # Part des chômeurs de longue durée
+       new_df$niveau_vie_median.,      # Niveau de vie médian
+       new_df$part_foy_fisc_impos.,    # Part des foyers fiscaux imposés
+       new_df$revenu_decl_median.,     # Revenu déclaré médian
+       new_df$esper_vie.femme,         # Espérance de vie femmes
+       new_df$esper_vie.homme,         # Espérance de vie hommes
+       new_df$part_20_24_sortis_nondip., # Jeunes 20-24 ans sans diplôme
+       new_df$taux_mort_infant.,       # Taux de mortalité infantile
+       new_df$part_pop75.,             # Part des 75 ans et plus dans la population
+       new_df$pop.f_15_24,             # Population des 15-24 ans
+       new_df$taux_lgmt_suroccupes.,   # Taux de logements suroccupés
+       new_df$log_hlm_tot.,            # Nombre de logements HLM
+       new_df$part_pls.,               # Part des logements sociaux (PLS)
+       new_df$part_log.vac,            # Part des logements vacants
+       new_df$qualair_NO2.moyanmax_dep,# Pollution NO₂
+       new_df$med_dist_km.act,         # Distance médiane aux services actifs
+       new_df$part_critair_1_0_vp.,    # Part de véhicules peu polluants (Crit’Air 1 et 0)
+       new_df$couv4g.,                 # Couverture 4G
+       new_df$apl_medgen_moins65.,     # Aide personnalisée au logement (<65 ans)
+       new_df$part_apa_plus75.,        # Part des +75 ans bénéficiaires de l’APA
+       new_df$nb_crea_etablissements., # Créations d’établissements
+       new_df$part_emp_ess.,            # Part de l’emploi dans l’économie sociale et solidaire
+       new_df$intensite_pvt.           # Intensité de la pauvreté
+       )
+dim(data)
+colnames(data) = c( "libgeo","taux_pvt.total","taux_chom_bit.total","taux_emp.total",
+                    "ecart_tx_emp_f_h.total","sal_hor_net_femme.ens","sal_hor_net_homme.ens",  
+                    "part_tps_partiel","part_chomeurs_ld","niveau_vie_median","part_foy_fisc_impos",    
+                    "revenu_decl_median","esper_vie.femme","esper_vie.homme","part_20_24_sortis_nondip", 
+                    "taux_mort_infant","part_pop75","pop.f_15_24","taux_lgmt_suroccupes","log_hlm_tot",            
+                    "part_pls","part_log.vac","qualair_NO2.moyanmax_dep","med_dist_km.act",
+                    "part_critair_1_0_vp","couv4g","apl_medgen_moins65","part_apa_plus75",
+                    "nb_crea_etablissements","part_emp_ess","intensite_pvt"           
+)
+View(data)
