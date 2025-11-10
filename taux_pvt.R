@@ -60,6 +60,7 @@ sum(is.na(tab_final))
 write.csv(tab_final, file = "/home/layedev/Documents/miashs2026/seminaire/projet_seminaire/data_clean.csv")
 new_df = read.csv("/home/layedev/Documents/miashs2026/seminaire/projet_seminaire/data_clean.csv", header=TRUE)
 # On définit les données sur les quelles on souhaite effectuer notre étude
+
 View(new_df)
 data = cbind(
        new_df$libgeo,                  # Villes d'études
@@ -91,9 +92,10 @@ data = cbind(
        new_df$apl_medgen_moins65.,     # Aide personnalisée au logement (<65 ans)
        new_df$part_apa_plus75.,        # Part des +75 ans bénéficiaires de l’APA
        new_df$nb_crea_etablissements., # Créations d’établissements
-       new_df$part_emp_ess.,            # Part de l’emploi dans l’économie sociale et solidaire
+       new_df$part_emp_ess.,           # Part de l’emploi dans l’économie sociale et solidaire
        new_df$intensite_pvt.           # Intensité de la pauvreté
-       )
+)
+
 dim(data)
 colnames(data) = c( "libgeo","taux_pvt.total","taux_chom_bit.total","taux_emp.total",
                     "ecart_tx_emp_f_h.total","sal_hor_net_femme.ens","sal_hor_net_homme.ens",  
@@ -105,3 +107,4 @@ colnames(data) = c( "libgeo","taux_pvt.total","taux_chom_bit.total","taux_emp.to
                     "nb_crea_etablissements","part_emp_ess","intensite_pvt"           
 )
 View(data)
+## Souadou 
