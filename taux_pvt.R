@@ -1,5 +1,5 @@
 # On charge les données
-df = read.csv("/home/layedev/Documents/miashs2026/seminaire/ODD_DEP.csv", header=TRUE, sep = ";", dec = ".")
+df = read.csv("/home/layedev/Documents/miashs2026/seminaire/ODD_DEP.csv", header=TRUE, sep = ";", dec = ".", fileEncoding = "latin1")
 
 ## Nettoyage des données initiales : supprimer les lignes qui contiennent un A2021 = NA
 df_clean = df[!is.na(df$A2021), ]
@@ -63,7 +63,6 @@ new_df = read.csv("/home/layedev/Documents/miashs2026/seminaire/projet_seminaire
 
 View(new_df)
 data = cbind(
-       new_df$libgeo,                  # Villes d'études
        new_df$taux_pvt.total,          # taux de pauvreté total
        new_df$taux_chom_bit.total,     # Taux de chômage (BIT)
        new_df$taux_emp.total,          # Taux d’emploi
@@ -97,7 +96,7 @@ data = cbind(
 )
 
 dim(data)
-colnames(data) = c( "libgeo","taux_pvt.total","taux_chom_bit.total","taux_emp.total",
+colnames(data) = c( "taux_pvt.total","taux_chom_bit.total","taux_emp.total",
                     "ecart_tx_emp_f_h.total","sal_hor_net_femme.ens","sal_hor_net_homme.ens",  
                     "part_tps_partiel","part_chomeurs_ld","niveau_vie_median","part_foy_fisc_impos",    
                     "revenu_decl_median","esper_vie.femme","esper_vie.homme","part_20_24_sortis_nondip", 
@@ -106,5 +105,33 @@ colnames(data) = c( "libgeo","taux_pvt.total","taux_chom_bit.total","taux_emp.to
                     "part_critair_1_0_vp","couv4g","apl_medgen_moins65","part_apa_plus75",
                     "nb_crea_etablissements","part_emp_ess","intensite_pvt"           
 )
+row.names(data) = c(new_df$libgeo)
 View(data)
-## Souadou 
+## Partie 4 : regression multiple
+"
+On définit un modèle de reagression multiple visant à modéliser la variation du taux de pauvreté total en fonction des 29 autres
+indicateurs.
+"
+data = as.data.frame(data)
+View(data)
+modele <- lm(taux_pvt.total ~ taux_chom_bit.total + taux_emp.total +
+               ecart_tx_emp_f_h.total + sal_hor_net_femme.ens + sal_hor_net_homme.ens +  
+               part_tps_partiel + part_chomeurs_ld + niveau_vie_median + part_foy_fisc_impos +    
+               revenu_decl_median + esper_vie.femme + esper_vie.homme + part_20_24_sortis_nondip +
+               taux_mort_infant + part_pop75 + pop.f_15_24 + taux_lgmt_suroccupes + log_hlm_tot +           
+               part_pls + part_log.vac + qualair_NO2.moyanmax_dep + med_dist_km.act +
+               part_critair_1_0_vp + couv4g + apl_medgen_moins65 + part_apa_plus75 +
+               nb_crea_etablissements + part_emp_ess + intensite_pvt,
+             data = data)
+summary(modele)
+"
+Nous remarquons que le coefficient de détermination 𝑅^2=  0.9743
+Étant donné que ce coefficient mesure l’efficacité du modèle, cela indique que les indicateurs
+retenus constituent un excellent choix pour expliquer la variation du taux de pauvreté total.
+# les coefficient :
+1_ l'intercept : elle réprésente le taux de pauvreté de base, c'est à dire la valeur attendue lorsque tous
+les indicateurs prennent 0. Dans le contexte de ce projet, cette valeur n'a aucun sens concret, donc nous l'ignorons.
+2_nous remarquons que la variable intensité de pauvreté à un p-value très faible (<2e-16) et un coefficient 1,08.
+Donc on peut dire que cet indicateur a un poids important sur la mesure du taux de pauvreté total que nous à modéliser.
+Chaque augmenttation d'une unité, augmente le taux de mauvreté à 1,08.
+" 
