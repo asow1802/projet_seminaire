@@ -129,9 +129,38 @@ Nous remarquons que le coefficient de détermination 𝑅^2=  0.9743
 Étant donné que ce coefficient mesure l’efficacité du modèle, cela indique que les indicateurs
 retenus constituent un excellent choix pour expliquer la variation du taux de pauvreté total.
 # les coefficient :
-1_ l'intercept : elle réprésente le taux de pauvreté de base, c'est à dire la valeur attendue lorsque tous
+** l'intercept : elle réprésente le taux de pauvreté de base, c'est à dire la valeur attendue lorsque tous
 les indicateurs prennent 0. Dans le contexte de ce projet, cette valeur n'a aucun sens concret, donc nous l'ignorons.
-2_nous remarquons que la variable intensité de pauvreté à un p-value très faible (<2e-16) et un coefficient 1,08.
-Donc on peut dire que cet indicateur a un poids important sur la mesure du taux de pauvreté total que nous à modéliser.
-Chaque augmenttation d'une unité, augmente le taux de mauvreté à 1,08.
+** nous remarquons que la variable intensité de pauvreté à un p-value très faible (<2e-16) et un coefficient 1,08.
+Donc on peut dire que cet indicateur a un poids important sur la mesure du taux de pauvreté total que nous
+cherchons à modéliser.
+Une hausse d'une unité, augmente en moyenne le taux de pauvreté à 1,08.Il s’agit du déterminant 
+principal, ce qui est logique : plus la pauvreté est profonde parmi les individus pauvres, plus 
+la proportion totale de personnes pauvres augmente.
+** Pour les variables part de véhicules peu polluants(part_critair_1_0_vp) et nombre de logement HLM
+(log_hlm_tot), nous remarquons des p-values respectives 0.00848 et 0.00740 avec des coefficients 
+très faibles. Cela nous indique que ces deux indicateurs ont des impactes signicatifs sur la 
+variations du taux de pauvreté tatal mais faible camparer à la variable intensité.
+-la vriable part de véhicules peu polluants reflète davantage un niveau d’équipement urbain 
+ou de richesse des ménages qu’un déterminant direct de la pauvreté.
+-Pour le nombre de logement HLM,les communes avec plus de logements sociaux présentent en moyenne 
+un taux de pauvreté légèrement plus élevé. Ce n’est pas un effet causal mais une relation structurelle :
+les HLM sont situés dans des zones plus modestes.
+** Pour les variables Part des +75 ans bénéficiaires de l’APA, Distance médiane aux services actifs et
+Population des 15-24 ans nous avons encore des p-values plus importantes mais faibles camparer au seuil.
+-Les variable Distance médiane aux services actifs et Population des 15-24 ont des coefficiants négatifs 
+ce qui signifie qu'une augmentation d'une unité, diminue le taux de pauvreté respectivement de 1.411e-01 
+et 3.506e-05 en moyenne. 
+Ce résultat reflète un effet structurel : les zones rurales, éloignées des services, ne sont pas forcément
+les plus pauvres, contrairement aux zones très urbanisées.
+On peut remarquer qu'aussi les communes plus jeunes affichent un taux de pauvreté légèrement plus faible, 
+ce qui peut traduire des territoires dynamiques ou universitaires.
+Ce pourrais etre des indicatieurs à s'appuyer pour améliorer les conditions socio-économique.
+-L'indicateurs Part des +75 ans bénéficiaires de l’APA  a  un coefficient 3.982e-02 ce qui signifie que
+une aumentation d'une uinité, fait accroitre le taux de pauvreté total de 3.982e-02 en moyenne. Mais nous
+tenons compte que l'impacte n'est pas très signicatif car cette valeur est très faible.
+Aussi on ajouter que Les communes ayant davantage de personnes âgées dépendantes ont un taux de pauvreté 
+légèrement plus élevé, mais cet effet reste très limité.
 " 
+res = PCA(data)
+res$eig
